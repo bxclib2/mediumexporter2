@@ -12,6 +12,7 @@ program
   .option('-H, --headers', 'Add headers at the beginning of the markdown file with metadata')
   .option('-S, --separator <separator>', 'Separator between headers and body','')
   .option('-I, --info', 'Show information about the medium post')
+  .option('-A, --all', 'Output all info in json')
   .on('--help', function(){
     console.log('  Examples:');
     console.log('');
@@ -36,7 +37,7 @@ utils.loadMediumPost(mediumURL, function(err, json) {
   story.url = s.canonicalUrl;
   story.language = s.detectedLanguage;
   story.license = s.license;
-
+  story.virtuals = s.virtuals
   if(program.info) {
     console.log(story);
     process.exit(0);
@@ -65,6 +66,12 @@ utils.loadMediumPost(mediumURL, function(err, json) {
     // Avoid double title/subtitle
     if(text != story.markdown[i])
       story.markdown.push(text);
+  }
+
+  if (program.all) {
+    story.markdown = story.markdown.join('\n')
+    console.log(story);
+    process.exit(0);
   }
 
   if(program.headers) {
