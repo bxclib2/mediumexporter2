@@ -5,6 +5,15 @@ var MEDIUM_IMG_CDN = "https://medium2.global.ssl.fastly.net/max/";
 var utils = {
   loadMediumPost: function(mediumURL, cb) {
     if(mediumURL.match(/^http/i)) {
+      // Find the position of "medium.com/"
+      const mediumIdx = mediumURL.indexOf("medium.com/");
+
+      // Check if the character after "medium.com/" is not '@'
+      if (mediumIdx !== -1 && mediumURL[mediumIdx + "medium.com/".length] !== '@') {
+          // Insert '@' after "medium.com/"
+          mediumURL = mediumURL.slice(0, mediumIdx + "medium.com/".length) + '@' + mediumURL.slice(mediumIdx + "medium.com/".length);
+      }
+
       request(mediumURL+"?format=json", function(err, res, body) {
         if(err) return cb(err);
         var json_string = body.substr(body.indexOf('{'));
