@@ -9,7 +9,7 @@ var utils = {
       const mediumIdx = mediumURL.indexOf("medium.com/");
 
       // Check if the character after "medium.com/" is not '@'
-      if (mediumIdx !== -1 && mediumURL[mediumIdx + "medium.com/".length] !== '@') {
+      if (mediumIdx !== -1 && mediumURL[mediumIdx-2] === '/' && mediumURL[mediumIdx + "medium.com/".length] !== '@') {
           // Insert '@' after "medium.com/"
           mediumURL = mediumURL.slice(0, mediumIdx + "medium.com/".length) + '@' + mediumURL.slice(mediumIdx + "medium.com/".length);
       }
