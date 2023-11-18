@@ -70,6 +70,7 @@ utils.loadMediumPost(mediumURL, function(err, json) {
 
   if (program.all) {
     story.markdown = story.markdown.join('\n')
+    story.references = json.payload.references
     console.log(JSON.stringify(story));
     process.exit(0);
   }
